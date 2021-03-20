@@ -108,7 +108,7 @@ const SwitchToggle = styled.label`
 	}
 `
 const Header = () => {
-	const [checkDarkMode, setcheckDarkMode] = useState(false)
+	const [checkDarkMode, setCheckDarkMode] = useState(false)
 	return (
 		<>
 			<HeaderStyled>
@@ -123,7 +123,7 @@ const Header = () => {
 						<input
 							type="checkbox"
 							checked={checkDarkMode}
-							onChange={() => setcheckDarkMode(!checkDarkMode)}
+							onChange={() => setCheckDarkMode(!checkDarkMode)}
 						/>
 						<span />
 					</SwitchToggle>
