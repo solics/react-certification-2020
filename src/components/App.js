@@ -1,5 +1,6 @@
 import React from 'react'
-import { Router, Route, Switch } from 'react-router'
+import { Route, Switch } from 'react-router'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import { ThemeContextProvider } from '../context/ThemeContext'
 import { YoutubeContextProvider } from '../context/YoutubeContext'
