@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { useLocation } from 'react-router'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import { YoutubeContext } from '../../context/YoutubeContext'
@@ -15,14 +14,18 @@ const MessageStyled = styled.p`
 `
 
 export default function VideosList() {
-	const { videos } = useContext(YoutubeContext)
-	const location = useLocation()
-	return location.pathname !== '/' ? (
-		<VideosListStyled>
-			{videos.map(item => (
-				<VideoCard key={uuidv4()} item={item} />
-			))}
-			{videos.length === 0 && <MessageStyled>There&apos;s no results</MessageStyled>}
-		</VideosListStyled>
-	) : null
+	const { videos, loading, errorMsg } = useContext(YoutubeContext)
+	return !loading ? (
+		<>
+			<VideosListStyled>
+				{videos.map(item => (
+					<VideoCard key={uuidv4()} item={item} />
+				))}
+				{videos.length === 0 && <MessageStyled>There&apos;s no results</MessageStyled>}
+			</VideosListStyled>
+			{errorMsg && <p>{errorMsg}</p>}
+		</>
+	) : (
+		<p>Loading...</p>
+	)
 }

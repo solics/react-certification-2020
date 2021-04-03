@@ -21,11 +21,6 @@ const App = () => {
 								<Home />
 							</Layout>
 						</Route>
-						<Route exact path="/search/:searchTerm">
-							<Layout>
-								<Home />
-							</Layout>
-						</Route>
 						<Route path="/video-detail/:videoId">
 							<Layout>
 								<VideoDetail />

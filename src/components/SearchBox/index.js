@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { YoutubeContext } from '../../context/YoutubeContext'
 import { ThemeContext } from '../../context/ThemeContext'
@@ -21,33 +20,26 @@ const InputSearch = styled.input`
 	}
 `
 export default function SearchBox() {
-	const history = useHistory()
-	const { searchTerm } = useParams()
 	const themeContext = useContext(ThemeContext)
 	const { search } = useContext(YoutubeContext)
-	const [inpSearch, setInpSearch] = useState(searchTerm)
-
-	useEffect(() => {
-		if (searchTerm) search(inpSearch)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [searchTerm])
+	const [inpSearch, setInpSearch] = useState('')
 
 	const handleChangeInpSearch = e => setInpSearch(e.target.value)
 
-	const handleOnKeyDown = e => {
-		if (e.keyCode === 13 && inpSearch) history.push(`/search/${inpSearch}`)
+	const handleOnSubmit = e => {
+		e.preventDefault()
+		search(inpSearch)
 	}
 
 	return (
-		<>
+		<form onSubmit={handleOnSubmit}>
 			<InputSearch
 				theme={themeContext}
 				value={inpSearch}
 				onChange={handleChangeInpSearch}
-				onKeyDown={handleOnKeyDown}
 				type="text"
 				placeholder="Search"
 			/>
-		</>
+		</form>
 	)
 }
