@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import mockData from '../../youtube-videos-mock.json'
 import VideosList from '../../components/VideosList'
 
 const HomeStyled = styled.div`
@@ -11,10 +10,11 @@ const Title = styled.h1`
 `
 
 const Home = () => {
+	useEffect(() => {}, [])
 	return (
 		<HomeStyled>
-			<Title>Videos List</Title>
-			<VideosList items={mockData.items} />
+			<Title>Results</Title>
+			<VideosList />
 		</HomeStyled>
 	)
 }

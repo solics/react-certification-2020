@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import MENU_ICON from '../../assets/img/svg/menu.svg'
 import USER_ICON from '../../assets/img/svg/user.svg'
+import { ThemeContext } from '../../context/ThemeContext'
+import SearchBox from '../SearchBox'
 
 const HeaderStyled = styled.header`
 	padding: 20px;
 	display: flex;
 	justify-content: space-between;
-	background-color: #ed553b;
+	background-color: ${props => props.theme.headerBackground};
 `
-
 const MenuButton = styled.button`
 	padding: 5px 10px 0 0px;
 	background: none;
@@ -27,22 +28,7 @@ const HeaderLeft = styled.div`
 		width: 100%;
 	}
 `
-const InputSearch = styled.input`
-	display: block;
-	border: none;
-	height: 35px;
-	background-color: #ad2d17;
-	color: white;
-	padding: 0 10px;
-	&:focus {
-		border: 0;
-		outline: 0;
-	}
-	&::placeholder {
-		color: white;
-		opacity: 1;
-	}
-`
+
 const HeaderRight = styled.div`
 	display: flex;
 	@media only screen and (max-width: 768px) {
@@ -71,10 +57,10 @@ const SwitchToggle = styled.label`
 		width: 0;
 		height: 0;
 		&:checked + span {
-			background-color: #ad2d17;
+			background-color: #999999;
 		}
 		&:focus + span {
-			box-shadow: 0 0 1px #ad2d17;
+			box-shadow: 0 0 1px #999999;
 		}
 		&:checked + span:before {
 			-webkit-transform: translateX(26px);
@@ -108,22 +94,23 @@ const SwitchToggle = styled.label`
 	}
 `
 const Header = () => {
-	const [checkDarkMode, setCheckDarkMode] = useState(false)
+	const themeContext = useContext(ThemeContext)
+
 	return (
 		<>
-			<HeaderStyled>
+			<HeaderStyled theme={themeContext}>
 				<HeaderLeft>
 					<MenuButton>
 						<img src={MENU_ICON} alt="menu" />
 					</MenuButton>
-					<InputSearch type="text" placeholder="Search" />
+					<SearchBox />
 				</HeaderLeft>
 				<HeaderRight>
-					<SwitchToggle>
+					<SwitchToggle theme={themeContext}>
 						<input
 							type="checkbox"
-							checked={checkDarkMode}
-							onChange={() => setCheckDarkMode(!checkDarkMode)}
+							checked={themeContext.theme === 'light'}
+							onChange={() => themeContext.toggle()}
 						/>
 						<span />
 					</SwitchToggle>
