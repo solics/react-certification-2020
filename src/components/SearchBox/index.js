@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { useHistory, useLocation } from 'react-router'
 import styled from 'styled-components'
 import { YoutubeContext } from '../../context/YoutubeContext'
 import { ThemeContext } from '../../context/ThemeContext'
@@ -21,6 +22,8 @@ const InputSearch = styled.input`
 `
 export default function SearchBox() {
 	const themeContext = useContext(ThemeContext)
+	const location = useLocation()
+	const history = useHistory()
 	const { search } = useContext(YoutubeContext)
 	const [inpSearch, setInpSearch] = useState('')
 
@@ -29,6 +32,7 @@ export default function SearchBox() {
 	const handleOnSubmit = e => {
 		e.preventDefault()
 		search(inpSearch)
+		if (location.pathname !== '/') history.push('/')
 	}
 
 	return (

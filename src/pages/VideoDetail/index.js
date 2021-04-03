@@ -1,17 +1,14 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
-import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
-import { YoutubeContext } from '../../context/YoutubeContext'
-import { getArrayFromLocalStorage } from '../../utils/localStorage'
 import { ThemeContext } from '../../context/ThemeContext'
+import useVideoDetail from '../../customHooks/useVideoDetail'
 
 const VideoDetailStyled = styled.div`
 	padding: 20px 80px;
 	display: flex;
 `
-
 const VideoInfoStyled = styled.div`
 	margin-right: 20px;
 	color: ${props => props.theme.color};
@@ -44,32 +41,13 @@ const IframeStyled = styled.iframe`
 `
 
 export default function VideoDetail() {
-	const { videoId } = useParams()
-	const { videos, setVideosContext } = useContext(YoutubeContext)
 	const themeContext = useContext(ThemeContext)
+	const [currentVideo, relatedVideos, videoId] = useVideoDetail()
 
-	const [currentVideo, setCurrentVideo] = useState({ snippet: { title: '...' } })
-
-	useEffect(() => {
-		let videosTmp
-		if (videos.length) videosTmp = [...videos]
-		else {
-			videosTmp = getArrayFromLocalStorage('videos') || []
-			if (videosTmp.length) setVideosContext(videosTmp)
-		}
-
-		const videoFound = videosTmp.find(
-			video => String(video.id.videoId) === String(videoId)
-		)
-		setCurrentVideo(videoFound)
-	}, [videoId, videos, setVideosContext]) // It'll be executed once
-
-	const relatedVideos = useMemo(() => {
-		return videos.filter(video => video.id.videoId !== videoId)
-	}, [videos, videoId])
 	const {
 		snippet: { title, channelTitle, description },
 	} = currentVideo
+
 	return (
 		<VideoDetailStyled>
 			<VideoInfoStyled theme={themeContext}>
