@@ -4,6 +4,7 @@ import MENU_ICON from '../../assets/img/svg/menu.svg'
 import USER_ICON from '../../assets/img/svg/user.svg'
 import { ThemeContext } from '../../context/ThemeContext'
 import SearchBox from '../SearchBox'
+import SwitchTheme from '../SwitchTheme'
 
 const HeaderStyled = styled.header`
 	padding: 20px;
@@ -28,7 +29,6 @@ const HeaderLeft = styled.div`
 		width: 100%;
 	}
 `
-
 const HeaderRight = styled.div`
 	display: flex;
 	@media only screen and (max-width: 768px) {
@@ -45,54 +45,7 @@ const Avatar = styled.div`
 		width: 100%;
 	}
 `
-const SwitchToggle = styled.label`
-	position: relative;
-	display: inline-block;
-	width: 50px;
-	height: 15px;
-	margin-top: 10px;
-	margin-right: 20px;
-	input {
-		opacity: 0;
-		width: 0;
-		height: 0;
-		&:checked + span {
-			background-color: #999999;
-		}
-		&:focus + span {
-			box-shadow: 0 0 1px #999999;
-		}
-		&:checked + span:before {
-			-webkit-transform: translateX(26px);
-			-ms-transform: translateX(26px);
-			transform: translateX(26px);
-		}
-	}
-	span {
-		position: absolute;
-		cursor: pointer;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-color: #ccc;
-		-webkit-transition: 0.4s;
-		transition: 0.4s;
-		border-radius: 34px;
-		&:before {
-			position: absolute;
-			content: '';
-			height: 26px;
-			width: 26px;
-			left: -1px;
-			bottom: -5px;
-			background-color: white;
-			-webkit-transition: 0.4s;
-			transition: 0.4s;
-			border-radius: 50%;
-		}
-	}
-`
+
 const Header = () => {
 	const themeContext = useContext(ThemeContext)
 
@@ -106,14 +59,7 @@ const Header = () => {
 					<SearchBox />
 				</HeaderLeft>
 				<HeaderRight>
-					<SwitchToggle theme={themeContext}>
-						<input
-							type="checkbox"
-							checked={themeContext.theme === 'light'}
-							onChange={() => themeContext.toggle()}
-						/>
-						<span />
-					</SwitchToggle>
+					<SwitchTheme />
 					<Avatar>
 						<img src={USER_ICON} alt="avatar" />
 					</Avatar>

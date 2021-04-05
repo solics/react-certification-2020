@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App App Snapshot 1`] = `
+exports[`Header App Snapshot 1`] = `
 <div>
   <header
     class="sc-hKgILt cHVRWu"
@@ -51,28 +51,5 @@ exports[`App App Snapshot 1`] = `
       </div>
     </div>
   </header>
-  <main
-    class="sc-fubCfw KIdRu"
-  >
-    <div
-      class="sc-kstrdz bzbeIL"
-    >
-      <h1
-        class="sc-hBEYos bWWlVU"
-      >
-        Results
-      </h1>
-      <div
-        class="sc-dQppl hUuVjZ"
-      >
-        <p
-          class="sc-bqyKva dRxrvM"
-        >
-          There's no results
-        </p>
-      </div>
-      
-    </div>
-  </main>
 </div>
 `;

@@ -19,7 +19,7 @@ export default function useVideoDetail() {
 		const videoFound = videosTmp.find(
 			video => String(video.id.videoId) === String(videoId)
 		)
-		setCurrentVideo(videoFound)
+		if (videoFound) setCurrentVideo(videoFound)
 	}, [videoId, videos, setVideosContext]) // It'll be executed once
 
 	const relatedVideos = useMemo(() => {

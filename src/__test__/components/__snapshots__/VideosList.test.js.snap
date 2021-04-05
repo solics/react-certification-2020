@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VideosList testing VideosList Snapshot 1`] = `
+<div>
+  <div
+    class="sc-jSgupP iCxkCv"
+  >
+    <p
+      class="sc-gKsewC gPlKBg"
+    >
+      There's no results
+    </p>
+  </div>
+  
+</div>
+`;

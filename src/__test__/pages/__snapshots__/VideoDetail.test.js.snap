@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VideoDetail testing Video Detail Snapshot 1`] = `
+<div>
+  <div
+    class="sc-bdfBwQ duyacE"
+  >
+    <div
+      class="sc-gsTCUz iiRrAN"
+    >
+      <iframe
+        class="sc-jSgupP dVHUwC"
+        src="https://www.youtube.com/embed/testId123456"
+        title="..."
+      />
+      <h2>
+        ...
+      </h2>
+      <h4 />
+      <p />
+    </div>
+    <div
+      class="sc-dlfnbm iLwtyW"
+    />
+  </div>
+</div>
+`;

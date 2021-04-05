@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import VideosList from '../../components/VideosList'
 
@@ -10,7 +10,6 @@ const Title = styled.h1`
 `
 
 const Home = () => {
-	useEffect(() => {}, [])
 	return (
 		<HomeStyled>
 			<Title>Results</Title>
