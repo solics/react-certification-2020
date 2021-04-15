@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import { ThemeContext } from '../../context/ThemeContext'
+import styled from 'styled-components/macro'
+import THEMES from '../../themes'
+import { GlobalContext } from '../../context/GlobalContext'
 
 const VideoCardStyled = styled.div`
 	width: 18%;
@@ -58,9 +59,9 @@ const VideoDescription = styled.p`
 `
 
 export default function VideoCard({ item }) {
-	const themeContext = useContext(ThemeContext)
+	const [state] = useContext(GlobalContext)
 	return (
-		<VideoCardStyled theme={themeContext}>
+		<VideoCardStyled theme={THEMES[state.currentTheme]}>
 			<Link to={`/video-detail/${item.id.videoId}`}>
 				<VideoThumbnail src={item.snippet.thumbnails.default.url} alt="thumbnail" />
 				<VideoInfo>

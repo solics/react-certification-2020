@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
-import styled from 'styled-components'
-import { ThemeContext } from '../../context/ThemeContext'
+import styled from 'styled-components/macro'
+import { GlobalContext } from '../../context/GlobalContext'
+import THEMES from '../../themes'
 
 const SwitchToggle = styled.label`
 	position: relative;
@@ -59,18 +60,22 @@ const IndicatorStyled = styled.span`
 `
 
 const SwitchTheme = () => {
-	const themeContext = useContext(ThemeContext)
-
+	const [state, dispatch] = useContext(GlobalContext)
+	const { currentTheme } = state
+	const handleSetTheme = () => {
+		const newTheme = currentTheme === 'light' ? 'dark' : 'light'
+		dispatch({ type: 'SET_CURRENT_THEME', payload: newTheme })
+	}
 	return (
 		<>
-			<IndicatorStyled theme={themeContext} onClick={() => themeContext.toggle()}>
-				{themeContext.theme === 'light' ? 'Light Mode' : 'Dark Mode'}
+			<IndicatorStyled theme={THEMES[currentTheme]} onClick={handleSetTheme}>
+				{currentTheme === 'light' ? 'Light Mode' : 'Dark Mode'}
 			</IndicatorStyled>
-			<SwitchToggle theme={themeContext}>
+			<SwitchToggle theme={THEMES[currentTheme]}>
 				<input
 					type="checkbox"
-					checked={themeContext.theme === 'light'}
-					onChange={() => themeContext.toggle()}
+					checked={currentTheme === 'light'}
+					onChange={handleSetTheme}
 				/>
 				<span />
 			</SwitchToggle>

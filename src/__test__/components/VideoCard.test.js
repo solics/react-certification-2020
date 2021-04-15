@@ -4,20 +4,20 @@ import { createMemoryHistory } from 'history'
 import React from 'react'
 import VideoCard from '../../components/VideoCard'
 import videosMock from '../../youtube-videos-mock.json'
-import { ThemeContextProvider } from '../../context/ThemeContext'
+import { GlobalContextProvider } from '../../context/GlobalContext'
 
 const history = createMemoryHistory()
 history.push('/')
 
 export const renderWithRouter = Component =>
 	render(
-		<ThemeContextProvider>
+		<GlobalContextProvider>
 			<Router history={history}>
 				<Route>
 					<Component item={videosMock.items[0]} />
 				</Route>
 			</Router>
-		</ThemeContextProvider>
+		</GlobalContextProvider>
 	)
 
 describe('VideoCard testing', () => {

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { v4 as uuidv4 } from 'uuid'
-import { YoutubeContext } from '../../context/YoutubeContext'
+import { GlobalContext } from '../../context/GlobalContext'
 import VideoCard from '../VideoCard'
 
 const VideosListStyled = styled.div`
@@ -14,8 +14,13 @@ const MessageStyled = styled.p`
 `
 
 export default function VideosList() {
-	const { videos, loading, errorMsg } = useContext(YoutubeContext)
-	return !loading ? (
+	const [state] = useContext(GlobalContext)
+	const {
+		youtube: {
+			searched: { videos, isLoading, onError },
+		},
+	} = state
+	return !isLoading ? (
 		<>
 			<VideosListStyled>
 				{videos.map(item => (
@@ -23,7 +28,7 @@ export default function VideosList() {
 				))}
 				{videos.length === 0 && <MessageStyled>There&apos;s no results</MessageStyled>}
 			</VideosListStyled>
-			{errorMsg && <p>{errorMsg}</p>}
+			{onError.msg && <p>{onError.msg}</p>}
 		</>
 	) : (
 		<p>Loading...</p>

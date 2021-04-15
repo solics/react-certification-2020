@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import MENU_ICON from '../../assets/img/svg/menu.svg'
 import USER_ICON from '../../assets/img/svg/user.svg'
-import { ThemeContext } from '../../context/ThemeContext'
+import { GlobalContext } from '../../context/GlobalContext'
 import SearchBox from '../SearchBox'
 import SwitchTheme from '../SwitchTheme'
+import THEMES from '../../themes'
 
 const HeaderStyled = styled.header`
 	padding: 20px;
@@ -47,11 +48,11 @@ const Avatar = styled.div`
 `
 
 const Header = () => {
-	const themeContext = useContext(ThemeContext)
+	const [state] = useContext(GlobalContext)
 
 	return (
 		<>
-			<HeaderStyled theme={themeContext}>
+			<HeaderStyled theme={THEMES[state.currentTheme]}>
 				<HeaderLeft>
 					<MenuButton>
 						<img src={MENU_ICON} alt="menu" />

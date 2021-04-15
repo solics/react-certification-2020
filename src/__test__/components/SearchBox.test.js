@@ -4,23 +4,20 @@ import { Router, Route } from 'react-router'
 import { fireEvent, render } from '@testing-library/react'
 import { createMemoryHistory } from 'history'
 import SearchBox from '../../components/SearchBox'
-import { ThemeContextProvider } from '../../context/ThemeContext'
-import { YoutubeContextProvider } from '../../context/YoutubeContext'
+import { GlobalContextProvider } from '../../context/GlobalContext'
 
 const history = createMemoryHistory()
 history.push('/video-detail/21321321')
 
 export const renderWithRouter = Component =>
 	render(
-		<YoutubeContextProvider>
-			<ThemeContextProvider>
-				<Router history={history}>
-					<Route>
-						<Component />
-					</Route>
-				</Router>
-			</ThemeContextProvider>
-		</YoutubeContextProvider>
+		<GlobalContextProvider>
+			<Router history={history}>
+				<Route>
+					<Component />
+				</Route>
+			</Router>
+		</GlobalContextProvider>
 	)
 
 describe('SearchBox', () => {

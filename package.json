@@ -21,13 +21,14 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"coverage": "react-scripts test --env=jsdom --watchAll=false --coverage",
+		"coverage": "react-scripts test --env=jest-environment-jsdom-sixteen --collectCoverage=true --watchAll=false --coverage",
 		"eject": "react-scripts eject",
 		"lint": "eslint ./src --ext .js,.jsx",
 		"lint:fix": "eslint ./src --ext .js,.jsx --fix"
 	},
 	"devDependencies": {
 		"@testing-library/react-hooks": "^5.1.1",
+		"babel-plugin-macros": "^3.0.1",
 		"eslint-config-airbnb": "^18.2.0",
 		"eslint-config-prettier": "^6.11.0",
 		"eslint-plugin-eslint-comments": "^3.2.0",
@@ -37,6 +38,7 @@
 		"eslint-plugin-react": "^7.20.6",
 		"eslint-plugin-react-hooks": "^4.1.0",
 		"husky": "^4.2.5",
+		"jest-environment-jsdom-sixteen": "^1.0.3",
 		"lint-staged": "^10.2.13",
 		"prettier": "^2.1.1",
 		"pretty-quick": "^3.0.0",
@@ -67,6 +69,14 @@
 		}
 	},
 	"jest": {
+		"coverageThreshold": {
+			"global": {
+				"branches": 50,
+				"functions": 50,
+				"lines": 50,
+				"statements": 50
+			}
+		},
 		"collectCoverageFrom": [
 			"**/*.{js,jsx}",
 			"!**/node_modules/**",
@@ -75,7 +85,9 @@
 			"!src/index.js",
 			"!<rootDir>/src/globalStyles.js",
 			"!<rootDir>/src/__test__/**",
-			"!<rootDir>/src/context/**"
+			"!<rootDir>/src/context/**",
+			"!<rootDir>/src/reducers/**",
+			"!<rootDir>/src/themes.js"
 		]
 	}
 }
