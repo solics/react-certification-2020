@@ -31,6 +31,6 @@ export default function VideosList() {
 			{onError.msg && <p>{onError.msg}</p>}
 		</>
 	) : (
-		<p>Loading..</p>
+		<p>Loading...</p>
 	)
 }
