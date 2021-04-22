@@ -1,0 +1,2 @@
+[context.production]
+  environment = { REACT_APP_YT_API_KEY = "AIzaSyBJm7njhNgKQtaOnGQMIU53BgPs94nLaLY" }
