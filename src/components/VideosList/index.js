@@ -26,7 +26,7 @@ export default function VideosList() {
 				{videos.map(item => (
 					<VideoCard key={uuidv4()} item={item} />
 				))}
-				{videos.length === 0 && <MessageStyled>There&apos;s no results</MessageStyled>}
+				{videos.length === 0 && <MessageStyled>No results</MessageStyled>}
 			</VideosListStyled>
 			{onError.msg && <p>{onError.msg}</p>}
 		</>
