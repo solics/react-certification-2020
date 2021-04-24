@@ -47,7 +47,6 @@ export default function RelatedVideos({ videoId, theme }) {
 	return videos.length ? (
 		<RelatedVideosStyled>
 			<h4>Related Videos</h4>
-			<br />
 			{videos.map(video => {
 				if (!video.snippet) return null
 				return (

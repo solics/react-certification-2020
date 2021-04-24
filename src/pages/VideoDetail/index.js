@@ -4,6 +4,7 @@ import { GlobalContext } from '../../context/GlobalContext'
 import useVideoDetail from '../../customHooks/useVideoDetail'
 import THEMES from '../../themes'
 import RelatedVideos from '../../components/RelatedVideos'
+import { addFavoriteVideo } from '../../utils/localStorage'
 
 const VideoDetailStyled = styled.div`
 	padding: 20px 80px;
@@ -49,6 +50,9 @@ export default function VideoDetail() {
 		snippet: { title, channelTitle, description },
 	} = video
 
+	const addToFavorites = () => {
+		addFavoriteVideo(video)
+	}
 	return (
 		<VideoDetailStyled>
 			{isLoading ? (
@@ -57,6 +61,9 @@ export default function VideoDetail() {
 				<VideoInfoStyled theme={THEMES[currentTheme]}>
 					<IframeStyled title={title} src={`https://www.youtube.com/embed/${videoId}`} />
 					<h2>{title}</h2>
+					<button type="button" onClick={addToFavorites}>
+						Add to favorites
+					</button>
 					<h4>{channelTitle}</h4>
 					<p>{description}</p>
 				</VideoInfoStyled>
