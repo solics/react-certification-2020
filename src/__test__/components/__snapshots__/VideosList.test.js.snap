@@ -3,10 +3,10 @@
 exports[`VideosList testing VideosList Snapshot 1`] = `
 <div>
   <div
-    class="sc-jSgupP iCxkCv"
+    class="VideosListStyled-sc-11o1z7z-0 bZFFBb"
   >
     <p
-      class="sc-gKsewC gPlKBg"
+      class="MessageStyled-sc-11o1z7z-1 icPHbH"
     >
       There's no results
     </p>

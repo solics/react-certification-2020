@@ -1,36 +1,37 @@
 import React from 'react'
 import { Route, Switch } from 'react-router'
-import { Router } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
-import { ThemeContextProvider } from '../context/ThemeContext'
-import { YoutubeContextProvider } from '../context/YoutubeContext'
+import { HashRouter } from 'react-router-dom'
+import { GlobalContextProvider } from '../context/GlobalContext'
 import Layout from './Layout'
 import Home from '../pages/Home'
 import GlobalStyle from '../globalStyles'
 import VideoDetail from '../pages/VideoDetail'
+import FavoritesVideos from '../pages/FavoritesVideos'
 
-const customHistory = createBrowserHistory()
 const App = () => {
 	return (
-		<YoutubeContextProvider>
-			<ThemeContextProvider>
-				<GlobalStyle />
-				<Router history={customHistory}>
-					<Switch>
-						<Route exact path="/">
-							<Layout>
-								<Home />
-							</Layout>
-						</Route>
-						<Route path="/video-detail/:videoId">
-							<Layout>
-								<VideoDetail />
-							</Layout>
-						</Route>
-					</Switch>
-				</Router>
-			</ThemeContextProvider>
-		</YoutubeContextProvider>
+		<GlobalContextProvider>
+			<GlobalStyle />
+			<HashRouter>
+				<Switch>
+					<Route exact path="/">
+						<Layout>
+							<Home />
+						</Layout>
+					</Route>
+					<Route path="/video-detail/:videoId">
+						<Layout>
+							<VideoDetail />
+						</Layout>
+					</Route>
+					<Route path="/favorites">
+						<Layout>
+							<FavoritesVideos />
+						</Layout>
+					</Route>
+				</Switch>
+			</HashRouter>
+		</GlobalContextProvider>
 	)
 }
 

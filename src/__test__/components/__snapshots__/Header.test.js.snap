@@ -3,13 +3,13 @@
 exports[`Header App Snapshot 1`] = `
 <div>
   <header
-    class="sc-hKgILt cHVRWu"
+    class="HeaderStyled-sc-1azer9k-0 fkXvoa"
   >
     <div
-      class="sc-jSgupP fERwWX"
+      class="HeaderLeft-sc-1azer9k-2 jIiuwi"
     >
       <button
-        class="sc-eCssSg haPxpw"
+        class="MenuButton-sc-1azer9k-1 iOJGbh"
       >
         <img
           alt="menu"
@@ -18,7 +18,8 @@ exports[`Header App Snapshot 1`] = `
       </button>
       <form>
         <input
-          class="sc-bdfBwQ hYMKcW"
+          class="InputSearch-sc-9xs9n4-0 kxGDRJ"
+          id="search-inp"
           placeholder="Search"
           type="text"
           value=""
@@ -26,15 +27,15 @@ exports[`Header App Snapshot 1`] = `
       </form>
     </div>
     <div
-      class="sc-gKsewC FqnSQ"
+      class="HeaderRight-sc-1azer9k-3 hMBPQS"
     >
       <span
-        class="sc-dlfnbm elkjzX"
+        class="IndicatorStyled-j2fz6n-1 fNjceH"
       >
         Dark Mode
       </span>
       <label
-        class="sc-gsTCUz fioiWy"
+        class="SwitchToggle-j2fz6n-0 dMraMU"
       >
         <input
           type="checkbox"
@@ -42,7 +43,7 @@ exports[`Header App Snapshot 1`] = `
         <span />
       </label>
       <div
-        class="sc-iBPRYJ kOQjMc"
+        class="Avatar-sc-1azer9k-4 esSGob"
       >
         <img
           alt="avatar"

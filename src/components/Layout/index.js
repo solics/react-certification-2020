@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import Header from '../Header'
-import { ThemeContext } from '../../context/ThemeContext'
+import THEMES from '../../themes'
+import { GlobalContext } from '../../context/GlobalContext'
 
 const MainStyled = styled.main`
 	background-color: ${props => props.theme.background};
@@ -18,12 +19,12 @@ const MainStyled = styled.main`
 `
 
 const Layout = ({ children }) => {
-	const themeContext = useContext(ThemeContext)
+	const [state] = useContext(GlobalContext)
 
 	return (
 		<>
 			<Header />
-			<MainStyled theme={themeContext}>{children}</MainStyled>
+			<MainStyled theme={THEMES[state.currentTheme]}>{children}</MainStyled>
 		</>
 	)
 }

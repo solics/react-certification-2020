@@ -2,8 +2,7 @@ import { render } from '@testing-library/react'
 import { Route, Router } from 'react-router'
 import { createMemoryHistory } from 'history'
 import React from 'react'
-import { ThemeContextProvider } from '../../context/ThemeContext'
-import { YoutubeContextProvider } from '../../context/YoutubeContext'
+import { GlobalContextProvider } from '../../context/GlobalContext'
 import VideoDetail from '../../pages/VideoDetail'
 
 const history = createMemoryHistory()
@@ -18,15 +17,13 @@ jest.mock('react-router', () => ({
 
 export const renderWithRouter = Component =>
 	render(
-		<YoutubeContextProvider>
-			<ThemeContextProvider>
-				<Router history={history}>
-					<Route>
-						<Component />
-					</Route>
-				</Router>
-			</ThemeContextProvider>
-		</YoutubeContextProvider>
+		<GlobalContextProvider>
+			<Router history={history}>
+				<Route>
+					<Component />
+				</Route>
+			</Router>
+		</GlobalContextProvider>
 	)
 
 describe('VideoDetail testing', () => {

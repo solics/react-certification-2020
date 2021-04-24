@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useHistory, useLocation } from 'react-router'
-import styled from 'styled-components'
-import { YoutubeContext } from '../../context/YoutubeContext'
-import { ThemeContext } from '../../context/ThemeContext'
+import styled from 'styled-components/macro'
+import { GlobalContext } from '../../context/GlobalContext'
+import useSearchVideos from '../../customHooks/useSearchVideos'
+import THEMES from '../../themes'
 
 const InputSearch = styled.input`
 	display: block;
@@ -21,28 +22,28 @@ const InputSearch = styled.input`
 	}
 `
 export default function SearchBox() {
-	const themeContext = useContext(ThemeContext)
 	const location = useLocation()
 	const history = useHistory()
-	const { search } = useContext(YoutubeContext)
+	const [state] = useContext(GlobalContext)
 	const [inpSearch, setInpSearch] = useState('')
-
+	const [requestVideos] = useSearchVideos()
 	const handleChangeInpSearch = e => setInpSearch(e.target.value)
 
 	const handleOnSubmit = e => {
 		e.preventDefault()
-		search(inpSearch)
+		requestVideos(inpSearch)
 		if (location.pathname !== '/') history.push('/')
 	}
 
 	return (
 		<form onSubmit={handleOnSubmit}>
 			<InputSearch
-				theme={themeContext}
+				theme={THEMES[state.currentTheme]}
 				value={inpSearch}
 				onChange={handleChangeInpSearch}
 				type="text"
 				placeholder="Search"
+				id="search-inp"
 			/>
 		</form>
 	)

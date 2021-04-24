@@ -11,35 +11,66 @@ const SEARCH_URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&ke
 function YoutubeContextProvider({ children }) {
 	const [videos, setVideos] = useState([])
 	const [loading, setLoading] = useState(false)
+	const [loadingRelated, setLoadingRelated] = useState(false)
 	const [errorMsg, setErrorMsg] = useState('')
+	const [errorMsgRelated, setErrorMsgRelated] = useState('')
+	const [videosRelated, setVideosRelated] = useState([])
+
+	const search = term => {
+		setLoading(true)
+		fetch(`${SEARCH_URL}q=${term}`)
+			.then(response => response.json())
+			.then(data => {
+				setLoading(false)
+				setErrorMsg('')
+				if (data?.items?.length) {
+					setVideos(data.items)
+					saveArrayOnLocalStorage('videos', data.items)
+				} else {
+					setVideos([])
+					setErrorMsg(data.error.message)
+				}
+			})
+			.catch(error => {
+				setLoading(false)
+				setErrorMsg(error.error.message)
+				console.error(error)
+			})
+	}
+
+	const getRelatedVideos = videoId => {
+		setLoadingRelated(true)
+		fetch(`${SEARCH_URL}relatedToVideoId=${videoId}`)
+			.then(response => response.json())
+			.then(data => {
+				setLoadingRelated(false)
+				setErrorMsgRelated('')
+				if (data?.items?.length) {
+					setVideosRelated(data.items)
+				} else {
+					setVideosRelated([])
+					setErrorMsgRelated(data.error.message)
+				}
+			})
+			.catch(error => {
+				setLoadingRelated(false)
+				setErrorMsgRelated(error.error.message)
+				console.error(error)
+			})
+	}
+
 	const defaultContext = {
 		videos,
-		search: term => {
-			setLoading(true)
-			fetch(`${SEARCH_URL}q=${term}`)
-				.then(response => response.json())
-				.then(data => {
-					setLoading(false)
-					setErrorMsg('')
-					if (data?.items?.length) {
-						setVideos(data.items)
-						saveArrayOnLocalStorage('videos', data.items)
-					} else {
-						setVideos([])
-						setErrorMsg(data.error.message)
-					}
-				})
-				.catch(error => {
-					setLoading(false)
-					setErrorMsg(error.error.message)
-					console.error(error)
-				})
-		},
+		videosRelated,
+		search,
 		setVideosContext: newVideos => {
 			setVideos(newVideos)
 		},
+		getRelatedVideos,
 		loading,
+		loadingRelated,
 		errorMsg,
+		errorMsgRelated,
 	}
 
 	return (

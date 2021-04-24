@@ -1,6 +1,6 @@
 import React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
-import useVideoDetail from '../../customHooks/useVideoDetail'
+import useSearchRelatedVideos from '../../customHooks/useSearchRelatedVideos'
 import { GlobalContextProvider } from '../../context/GlobalContext'
 
 jest.mock('react-router', () => ({
@@ -10,14 +10,13 @@ jest.mock('react-router', () => ({
 	}),
 }))
 
-describe('useVideoDetail tests', () => {
+describe('useSearchRelatedVideos tests', () => {
 	const wrapper = ({ children }) => (
 		<GlobalContextProvider>{children}</GlobalContextProvider>
 	)
 
 	it('verifies that it works well with no initial value', () => {
-		const { result } = renderHook(() => useVideoDetail(), { wrapper })
+		const { result } = renderHook(() => useSearchRelatedVideos(), { wrapper })
 		expect(result.current[0]).not.toBeUndefined() // currentVideo
-		expect(result.current[1]).toBe('testId123456') // videoId
 	})
 })
