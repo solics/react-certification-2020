@@ -1,3 +1,7 @@
+import USER_ICON from '../assets/img/svg/user.svg'
+
+const avatarUrlDefault = USER_ICON
+
 const initialState = {
 	currentTheme: 'dark',
 	youtube: {
@@ -26,6 +30,15 @@ const initialState = {
 				code: '',
 				msg: '',
 			},
+		},
+	},
+	sessionData: {
+		isLogged: false,
+		isLoading: false,
+		avatarUrl: avatarUrlDefault,
+		onError: {
+			code: '',
+			msg: '',
 		},
 	},
 }
@@ -81,6 +94,22 @@ const reducer = (state, action) => {
 					...state.youtube,
 					searched: {
 						...state.youtube.searched,
+						isLoading: false,
+						onError: {
+							code: '',
+							msg: '',
+						},
+					},
+				},
+			}
+		case 'CLEAN_VIDEOS_RESULTS':
+			return {
+				...state,
+				youtube: {
+					...state.youtube,
+					searched: {
+						searchedTerm: '',
+						videos: [],
 						isLoading: false,
 						onError: {
 							code: '',
@@ -187,6 +216,51 @@ const reducer = (state, action) => {
 						...state.youtube.currentVideo,
 						isLoading: false,
 					},
+				},
+			}
+		case 'LOGIN_START':
+			return {
+				...state,
+				sessionData: {
+					...state.sessionData,
+					isLoading: true,
+				},
+			}
+		case 'LOGIN_SUCCESS':
+			return {
+				...state,
+				sessionData: {
+					...state.sessionData,
+					avatarUrl: action.payload,
+					isLogged: true,
+				},
+			}
+		case 'LOGIN_FAIL':
+			return {
+				...state,
+				sessionData: {
+					...state.sessionData,
+					onError: {
+						code: action.payload?.code || 'Unknown',
+						msg: action.payload?.msg || 'Generic Error',
+					},
+				},
+			}
+		case 'LOGIN_FINISH':
+			return {
+				...state,
+				sessionData: {
+					...state.sessionData,
+					isLoading: false,
+				},
+			}
+		case 'LOGOUT':
+			return {
+				...state,
+				sessionData: {
+					...state.sessionData,
+					isLogged: false,
+					avatarUrl: avatarUrlDefault,
 				},
 			}
 		default:

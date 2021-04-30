@@ -44,8 +44,8 @@ const VideoTitle = styled.span`
 	display: -webkit-box;
 	font-size: 14px;
 	font-weight: 800;
-	min-height: 32px;
-	max-height: 32px;
+	min-height: 40px;
+	max-height: 40px;
 	overflow: hidden;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -62,7 +62,7 @@ export default function VideoCard({ item }) {
 	const [state] = useContext(GlobalContext)
 	return (
 		<VideoCardStyled theme={THEMES[state.currentTheme]}>
-			<Link to={`/video-detail/${item.id.videoId}`}>
+			<Link to={`/video-detail/${item.id.videoId || item.id}`}>
 				<VideoThumbnail src={item.snippet.thumbnails.default.url} alt="thumbnail" />
 				<VideoInfo>
 					<VideoTitle>{item.snippet.title}</VideoTitle>

@@ -1,11 +1,34 @@
-import { useContext, useCallback } from 'react'
+import { useContext, useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router'
 import { GlobalContext } from '../context/GlobalContext'
 import { YT_DETAIL_API } from '../utils/urls'
+import { addFavoriteVideo, removeFavoriteVideo, isFavorite } from '../utils/localStorage'
 
 export default function useVideoDetail() {
 	const { videoId } = useParams()
-	const [, dispatch] = useContext(GlobalContext)
+	const [state, dispatch] = useContext(GlobalContext)
+
+	const [isFavoriteVideo, setIsFavoriteVideo] = useState(isFavorite(videoId))
+	const {
+		currentTheme,
+		youtube: {
+			currentVideo: { video, isLoading },
+		},
+		sessionData: { isLogged },
+	} = state
+
+	useEffect(() => {
+		setIsFavoriteVideo(isFavorite(videoId))
+	}, [isLogged, videoId])
+
+	const addToFavorites = () => {
+		addFavoriteVideo(video)
+		setIsFavoriteVideo(!isFavoriteVideo)
+	}
+	const removeFromFavorites = () => {
+		removeFavoriteVideo(videoId)
+		setIsFavoriteVideo(!isFavoriteVideo)
+	}
 
 	const requestVideoDetail = useCallback(
 		async term => {
@@ -36,5 +59,18 @@ export default function useVideoDetail() {
 		[dispatch, videoId]
 	)
 
-	return [requestVideoDetail, videoId]
+	useEffect(() => {
+		requestVideoDetail()
+		setIsFavoriteVideo(isFavorite(videoId))
+	}, [requestVideoDetail, videoId])
+
+	return [
+		currentTheme,
+		isLogged,
+		isLoading,
+		video,
+		isFavoriteVideo,
+		addToFavorites,
+		removeFromFavorites,
+	]
 }

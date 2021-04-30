@@ -1,19 +1,17 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import VideosList from '../../components/VideosList'
+import { getFavoriteVideos } from '../../utils/localStorage'
 
 const FavoritesContainer = styled.div`
 	padding: 40px;
 `
 
 export default function FavoritesVideos() {
-	const favoritesVideos = []
+	const favoritesVideos = getFavoriteVideos()
 	return (
 		<FavoritesContainer>
-			{favoritesVideos.length === 0 && <p>You have no favorite videos yet</p>}
-			{favoritesVideos &&
-				favoritesVideos.map(item => {
-					return <div>{item.title}</div>
-				})}
+			<VideosList videos={favoritesVideos} isLoading={false} />
 		</FavoritesContainer>
 	)
 }

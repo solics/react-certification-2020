@@ -16,7 +16,6 @@ const ModalSideMenu = styled.div`
 	left: 0;
 	z-index: 3;
 `
-
 const SideMenuStyled = styled.div`
 	height: 100vh;
 	position: fixed;
@@ -36,7 +35,7 @@ const LinkStyled = styled.div`
 	}
 `
 
-export default function SideMenu() {
+export default function SideMenu({ isLogged }) {
 	const [state] = useContext(GlobalContext)
 
 	return (
@@ -45,9 +44,11 @@ export default function SideMenu() {
 				<LinkStyled theme={THEMES[state.currentTheme]}>
 					<Link to="/"> Home </Link>
 				</LinkStyled>
-				<LinkStyled theme={THEMES[state.currentTheme]}>
-					<Link to="/favorites"> Favorites </Link>
-				</LinkStyled>
+				{isLogged && (
+					<LinkStyled theme={THEMES[state.currentTheme]}>
+						<Link to="/favorites"> Favorites </Link>
+					</LinkStyled>
+				)}
 			</SideMenuStyled>
 		</ModalSideMenu>
 	)

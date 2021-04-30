@@ -1,15 +1,17 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
-import { GlobalContext } from '../../context/GlobalContext'
 import useVideoDetail from '../../customHooks/useVideoDetail'
 import THEMES from '../../themes'
 import RelatedVideos from '../../components/RelatedVideos'
-import { addFavoriteVideo } from '../../utils/localStorage'
 
 const VideoDetailStyled = styled.div`
 	padding: 20px 80px;
 	display: flex;
 	flex-wrap: wrap;
+	& > span:first-child {
+		display: block;
+		width: 70%;
+	}
 `
 const VideoInfoStyled = styled.div`
 	padding-right: 40px;
@@ -21,7 +23,6 @@ const VideoInfoStyled = styled.div`
 		padding-right: 0px;
 	}
 `
-
 const IframeStyled = styled.iframe`
 	width: 100%;
 	min-height: 500px;
@@ -32,43 +33,43 @@ const IframeStyled = styled.iframe`
 `
 
 export default function VideoDetail() {
-	const [state] = useContext(GlobalContext)
-	const [requestVideoDetail, videoId] = useVideoDetail()
-
-	const {
+	const [
 		currentTheme,
-		youtube: {
-			currentVideo: { video, isLoading },
-		},
-	} = state
-
-	useEffect(() => {
-		requestVideoDetail()
-	}, [requestVideoDetail, videoId])
-
+		isLogged,
+		isLoading,
+		video,
+		isFavoriteVideo,
+		addToFavorites,
+		removeFromFavorites,
+	] = useVideoDetail()
 	const {
 		snippet: { title, channelTitle, description },
+		id,
 	} = video
 
-	const addToFavorites = () => {
-		addFavoriteVideo(video)
-	}
 	return (
 		<VideoDetailStyled>
 			{isLoading ? (
 				<span>Loading</span>
 			) : (
 				<VideoInfoStyled theme={THEMES[currentTheme]}>
-					<IframeStyled title={title} src={`https://www.youtube.com/embed/${videoId}`} />
+					<IframeStyled title={title} src={`https://www.youtube.com/embed/${id}`} />
 					<h2>{title}</h2>
-					<button type="button" onClick={addToFavorites}>
-						Add to favorites
-					</button>
+					{isLogged && !isFavoriteVideo && (
+						<button type="button" onClick={addToFavorites}>
+							Add to favorites
+						</button>
+					)}
+					{isLogged && isFavoriteVideo && (
+						<button type="button" onClick={removeFromFavorites}>
+							Remove from favorites
+						</button>
+					)}
 					<h4>{channelTitle}</h4>
 					<p>{description}</p>
 				</VideoInfoStyled>
 			)}
-			<RelatedVideos theme={THEMES[currentTheme]} videoId={videoId} />
+			<RelatedVideos theme={THEMES[currentTheme]} videoId={id} />
 		</VideoDetailStyled>
 	)
 }

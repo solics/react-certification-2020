@@ -13,6 +13,10 @@ const RelatedVideosStyled = styled.div`
 	@media only screen and (max-width: 768px) {
 		width: 100%;
 	}
+	h4 {
+		color: ${props => props.theme.color};
+		margin-top: 0;
+	}
 `
 const ThumbnailVideoStyled = styled.div`
 	display: grid;
@@ -45,7 +49,7 @@ export default function RelatedVideos({ videoId, theme }) {
 	}, [requestRelatedVideos, videoId])
 
 	return videos.length ? (
-		<RelatedVideosStyled>
+		<RelatedVideosStyled theme={theme}>
 			<h4>Related Videos</h4>
 			{videos.map(video => {
 				if (!video.snippet) return null
@@ -66,6 +70,6 @@ export default function RelatedVideos({ videoId, theme }) {
 			})}
 		</RelatedVideosStyled>
 	) : (
-		<div>loading...</div>
+		<span>Loading...</span>
 	)
 }

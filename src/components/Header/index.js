@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components/macro'
 import MENU_ICON from '../../assets/img/svg/menu.svg'
-import USER_ICON from '../../assets/img/svg/user.svg'
 import { GlobalContext } from '../../context/GlobalContext'
 import SearchBox from '../SearchBox'
 import SwitchTheme from '../SwitchTheme'
 import THEMES from '../../themes'
 import Login from '../../pages/Login'
-import { loginApi } from '../../api/services'
 import SideMenu from '../SideMenu'
+import useLogin from '../../customHooks/useLogin'
 
 const HeaderStyled = styled.header`
 	padding: 20px;
@@ -66,62 +65,51 @@ const MenuLogIn = styled.div`
 `
 
 const Header = () => {
-	const [state] = useContext(GlobalContext)
-	const [showLoginBtn, setShowLoginBtn] = useState(false)
-	const [showLoginModal, setShowLoginModal] = useState(false)
-	const [avatarUrl, setAvatarUrl] = useState(USER_ICON)
-	const [error, setError] = useState('')
-	const [showSideMenu, setShowSideMenu] = useState(false)
-
-	useEffect(() => {
-		const clickOutside = e => {
-			if (e.target?.id === 'modal') setShowLoginModal(false)
-			else if (e.target?.id === 'modal-menu') setShowSideMenu(false)
-			setError('')
-		}
-		document.addEventListener('click', clickOutside)
-		return () => document.removeEventListener('click', clickOutside)
-	}, [])
-
-	const handleClickLogin = () => {
-		setShowLoginBtn(false)
-		setShowLoginModal(true)
-	}
-
-	const handleSubmitLogin = async ({ username, password }) => {
-		try {
-			const response = await loginApi({ username, password })
-			setAvatarUrl(response.avatarUrl)
-			setShowLoginModal(false)
-		} catch (err) {
-			console.log(err)
-			setError('Username or password invalid')
-		}
-	}
+	const [
+		{
+			currentTheme,
+			sessionData: { avatarUrl, onError, isLogged },
+		},
+	] = useContext(GlobalContext)
+	const [
+		showSideMenu,
+		showLoginModal,
+		showLoginBtn,
+		clickLogin,
+		login,
+		toggleShowSideMenu,
+		toggleShowLoginBtn,
+		logOut,
+	] = useLogin()
 
 	return (
 		<>
-			<HeaderStyled theme={THEMES[state.currentTheme]}>
-				{showSideMenu && <SideMenu />}
+			<HeaderStyled theme={THEMES[currentTheme]}>
+				{showSideMenu && <SideMenu isLogged={isLogged} />}
 				<HeaderLeft>
-					<MenuButton onClick={() => setShowSideMenu(!showSideMenu)}>
+					<MenuButton onClick={toggleShowSideMenu}>
 						<img src={MENU_ICON} alt="menu" />
 					</MenuButton>
 					<SearchBox />
 				</HeaderLeft>
 				<HeaderRight>
 					<SwitchTheme />
-					<Avatar onClick={() => setShowLoginBtn(!showLoginBtn)}>
+					<Avatar onClick={toggleShowLoginBtn}>
 						<img src={avatarUrl} alt="avatar" />
 					</Avatar>
-					{showLoginBtn && (
-						<MenuLogIn onClick={handleClickLogin}>
+					{showLoginBtn && !isLogged && (
+						<MenuLogIn onClick={clickLogin}>
 							<span>Log in</span>
+						</MenuLogIn>
+					)}
+					{showLoginBtn && isLogged && (
+						<MenuLogIn onClick={logOut}>
+							<span>Log out</span>
 						</MenuLogIn>
 					)}
 				</HeaderRight>
 			</HeaderStyled>
-			{showLoginModal && <Login handleSubmitLogin={handleSubmitLogin} error={error} />}
+			{showLoginModal && <Login handleSubmitLogin={login} error={onError.msg} />}
 		</>
 	)
 }

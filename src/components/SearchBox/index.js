@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { useHistory, useLocation } from 'react-router'
+import React, { useState, useContext, useEffect } from 'react'
+import { useHistory, useParams } from 'react-router'
 import styled from 'styled-components/macro'
 import { GlobalContext } from '../../context/GlobalContext'
 import useSearchVideos from '../../customHooks/useSearchVideos'
@@ -22,17 +22,20 @@ const InputSearch = styled.input`
 	}
 `
 export default function SearchBox() {
-	const location = useLocation()
 	const history = useHistory()
+	const { searchTerm } = useParams()
 	const [state] = useContext(GlobalContext)
 	const [inpSearch, setInpSearch] = useState('')
 	const [requestVideos] = useSearchVideos()
 	const handleChangeInpSearch = e => setInpSearch(e.target.value)
 
+	useEffect(() => {
+		if (searchTerm) requestVideos(searchTerm)
+	}, [searchTerm, requestVideos])
+
 	const handleOnSubmit = e => {
 		e.preventDefault()
-		requestVideos(inpSearch)
-		if (location.pathname !== '/') history.push('/')
+		history.push(`/${inpSearch}`)
 	}
 
 	return (

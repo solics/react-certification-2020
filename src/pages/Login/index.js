@@ -42,10 +42,14 @@ export default function Login({ handleSubmitLogin, error }) {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 
+	const onSubmit = e => {
+		e.preventDefault()
+		handleSubmitLogin({ username, password })
+	}
 	return ReactDOM.createPortal(
 		<ModalLoginStyled id="modal">
 			<LoginBoxStyled>
-				<form onSubmit={() => handleSubmitLogin({ username, password })}>
+				<form onSubmit={onSubmit}>
 					<h2>Login</h2>
 					<InputStyled
 						placeholder="Username"
