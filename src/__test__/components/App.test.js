@@ -6,7 +6,7 @@ import { setupServer } from 'msw/node'
 import { rest } from 'msw'
 import { Route, Router } from 'react-router'
 import { GlobalContextProvider } from '../../context/GlobalContext'
-import App from '../../components/App'
+import App from '../../App'
 import { YT_API } from '../../utils/urls'
 import mockYT from '../../youtube-videos-mock.json'
 
